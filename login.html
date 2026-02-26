@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CloudCollab | Sign In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <!-- Back link -->
+  <a href="index1.html" class="back-link">← Back to Home</a>
+
+  <main class="auth-wrapper">
+    <section class="auth-card">
+      <!-- Logo -->
+      <div class="auth-logo">
+        <div class="logo-icon">☁️</div>
+        <span class="logo-text-main">Cloud</span>
+        <span class="logo-text-accent">Collab</span>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="tab active" id="tab-signin">Sign In</button>
+        <button class="tab" id="tab-signup">Sign Up</button>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <form class="auth-form" id="form-signin">
+        <label class="field-label">Email</label>
+        <div class="field">
+          <span class="field-icon">✉️</span>
+          <input
+            type="email"
+            name="signin-email"
+            id="signin-email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <label class="field-label">Password</label>
+        <div class="field">
+          <span class="field-icon">🔒</span>
+          <input
+            type="password"
+            name="signin-password"
+            id="signin-password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <div class="field-row">
+          <a href="#" class="link-small">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="primary-btn">Sign In</button>
+        <div id="signin-message" style="color: red; margin-top: 10px; text-align: center; display: none;"></div>
+
+        <div class="divider">
+          <span>or continue with</span>
+        </div>
+
+        <div class="provider-row">
+          <button type="button" class="provider-btn">
+            <span>G</span>
+            Google
+          </button>
+          <button type="button" class="provider-btn">
+            <span>GH</span>
+            GitHub
+          </button>
+        </div>
+
+        <p class="terms-text">
+          By continuing, you agree to our
+          <a href="#">Terms of Service</a> and
+          <a href="#">Privacy Policy</a>.
+        </p>
+      </form>
+
+      <!-- SIGN UP FORM -->
+      <form
+        class="auth-form hidden"
+        id="form-signup"
+      >
+        <label class="field-label">Full Name</label>
+        <div class="field">
+          <span class="field-icon">👤</span>
+          <input
+            type="text"
+            name="name"
+            id="signup-name"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+
+        <label class="field-label">Email</label>
+        <div class="field">
+          <span class="field-icon">✉️</span>
+          <input
+            type="email"
+            name="email"
+            id="signup-email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <label class="field-label">Password</label>
+        <div class="field">
+          <span class="field-icon">🔒</span>
+          <input
+            type="password"
+            name="password"
+            id="signup-password"
+            placeholder="Create a password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="primary-btn">Create Account</button>
+        <div id="signup-message" style="color: red; margin-top: 10px; text-align: center; display: none;"></div>
+
+        <div class="divider">
+          <span>or sign up with</span>
+        </div>
+
+        <div class="provider-row">
+          <button type="button" class="provider-btn">
+            <span>G</span>
+            Google
+          </button>
+          <button type="button" class="provider-btn">
+            <span>GH</span>
+            GitHub
+          </button>
+        </div>
+
+        <p class="terms-text">
+          By creating an account, you agree to our
+          <a href="#">Terms of Service</a> and
+          <a href="#">Privacy Policy</a>.
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <!-- Tab switching logic -->
+  <script src="login-tabs.js"></script>
+  <script src="auth-handler.js"></script>
+</body>
+</html>

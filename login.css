@@ -1,0 +1,228 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Inter", sans-serif;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1f2a5a 0, #050322 55%, #020111 100%);
+  color: #f9fafb;
+}
+
+/* Back link */
+.back-link {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  font-size: 14px;
+  color: #e5e7eb;
+  text-decoration: none;
+}
+
+/* Center wrapper */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+/* Card */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617);
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.95);
+  padding: 32px 28px 26px;
+}
+
+/* Logo */
+.auth-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 30% 20%, #67e8f9, #22d3ee 60%, #0f172a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text-main {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.logo-text-accent {
+  font-weight: 700;
+  font-size: 20px;
+  color: #22d3ee;
+}
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  background: #020617;
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  border-radius: 999px;
+  padding: 8px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #020617;
+  color: #f9fafb;
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+.field-label {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #020617;
+  border-radius: 12px;
+  border: 1px solid rgba(55, 65, 81, 0.9);
+  padding: 10px 12px;
+}
+
+.field-icon {
+  font-size: 14px;
+}
+
+.field input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #e5e7eb;
+  font-size: 14px;
+}
+
+.field-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+}
+
+.link-small {
+  font-size: 12px;
+  color: #22d3ee;
+  text-decoration: none;
+}
+
+/* Primary button */
+.primary-btn {
+  margin-top: 4px;
+  border: none;
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+  color: #022c22;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 6px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(55, 65, 81, 0.9);
+}
+
+/* Providers */
+.provider-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.provider-btn {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid rgba(55, 65, 81, 0.9);
+  background: #020617;
+  color: #e5e7eb;
+  font-size: 13px;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.provider-btn span {
+  font-size: 12px;
+}
+
+/* Terms */
+.terms-text {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.terms-text a {
+  color: #22d3ee;
+  text-decoration: none;
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 28px 20px 22px;
+  }
+}
+.hidden {
+  display: none;
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TeamSync Workspace</title>
+  <link rel="stylesheet" href="workspace.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      FILES
+      <span id="userEmail" style="font-size: 0.8em; color: #888; display: block; margin-top: 5px;">Loading...</span>
+      <span id="fileOwnerDisplay" style="font-size: 0.7em; color: #94a3b8; display: block; margin-top: 3px;">&nbsp;</span>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="sidebar-section">
+      <div class="section-header">
+        📁 Projects
+        <button id="newProjectBtn" class="section-action-btn" title="New Project">+</button>
+      </div>
+      <div id="projectsList" class="projects-list"></div>
+    </div>
+
+    <!-- Files & Folders Section -->
+    <div class="sidebar-section">
+      <div class="section-header">
+        📂 Files & Folders
+      </div>
+      <ul id="fileTree"></ul>
+    </div>
+    <!-- Team Members Box (shows workspace owner + joined members) -->
+    <div id="teamMembersBox" style="padding:12px; margin-top:12px; border-top:1px solid #111827; color:#cbd5e1; font-size:13px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <strong style="color:#fff;">Team Members</strong>
+      </div>
+      <div id="teamMembersList" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="toolbar">
+      <span id="currentFileName" style="margin-right: 20px; color: #888;">No file selected</span>
+      <button id="newFolder">New Folder</button>
+      <button id="newFile">New File</button>
+      <button id="saveBtn" style="background-color: #10b981;">Save</button>
+      <button id="deleteBtn" style="background-color: #ef4444; color: #fff;">Delete</button>
+      <button id="scheduleMeetBtn" title="Schedule Google Meet" style="margin-left: 10px; background:#10b981;">📅</button>
+      <button id="logoutBtn" style="margin-left: auto; background-color: #ff6b6b;">Logout</button>
+    </div>
+
+    <div class="editor-container" style="display: flex; flex-direction: column; height: 100%;">
+      <textarea id="codeEditor" placeholder="Select a file to edit or create a new one..." style="flex: 1; border: none; background: #1e293b; color: #fff; font-family: monospace; padding: 10px; font-size: 14px; resize: none;"></textarea>
+      
+      <!-- Terminal Output Panel -->
+      <div id="terminalPanel" style="display: none; border-top: 1px solid #334155; background: #0f172a; color: #10b981; font-family: monospace; font-size: 12px; overflow-y: auto; max-height: 200px;">
+        <div style="padding: 8px; background: #1e293b; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center;">
+          <span>📟 Terminal Output</span>
+          <button id="clearTerminal" style="padding: 4px 8px; background: #334155; color: #fff; border: none; border-radius: 3px; cursor: pointer; font-size: 11px;">Clear</button>
+        </div>
+        <pre id="terminalOutput" style="margin: 0; padding: 10px; white-space: pre-wrap; word-wrap: break-word;"></pre>
+      </div>
+    </div>
+  </main>
+
+  <!-- Right Panel: Team Chat and AI Assistant -->
+  <aside class="right-panel">
+    <div class="right-panel-header">
+      <h3>My Workspace</h3>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button id="showWorkspaceCodeBtn" class="invite-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px;">💼 View Code</button>
+        <button id="leaveWorkspaceBtn" style="display:none; background:#ef4444; color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px;">🚪 Leave Workspace</button>
+      </div>
+    </div>
+
+    <!-- Workspace Code Display Section - Initially Hidden -->
+    <div id="workspaceCodeSection" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: center; display: none;">
+      <p style="font-size: 11px; color: #fff; margin: 0 0 8px 0; opacity: 0.9;">WORKSPACE CODE</p>
+      <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+        <input id="workspaceCode" type="text" readonly style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #10b981; font-weight: bold; font-size: 18px; letter-spacing: 3px; text-align: center;" placeholder="Loading..." />
+        <button id="copyWorkspaceCodeBtn" style="padding: 10px 12px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px;">COPY</button>
+      </div>
+      <button id="generateLinkBtn" style="width: 100%; padding: 8px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; margin-bottom: 8px;">🔗 GENERATE SHARE LINK</button>
+      <button id="hideWorkspaceCodeBtn" style="width: 100%; padding: 8px; background: #64748b; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px;">Hide Code</button>
+    </div>
+
+    <div class="right-panel-tabs">
+      <button class="tab-btn active" data-tab="team-chat">💬 Team Chat</button>
+      <button class="tab-btn" data-tab="ai-assistant">🤖 AI Assistant</button>
+      <button class="tab-btn" data-tab="file-info">📋 File Info</button>
+      <button class="tab-btn" data-tab="join-workspace">🔗 Join Workspace</button>
+    </div>
+
+    <!-- Team Chat Tab -->
+    <div id="team-chat" class="tab-content active">
+      <div style="padding: 8px; background: #0f172a; border-bottom: 1px solid #334155; font-size: 11px; color: #94a3b8; margin-bottom: 8px;">
+        <span id="chatTeamIndicator">Team Chat</span>
+      </div>
+      <div id="chatMessages" class="messages-container"></div>
+      <div class="input-group">
+        <input id="chatInput" type="text" placeholder="Type a message..." />
+        <button id="chatSendBtn">Send</button>
+      </div>
+    </div>
+
+    <!-- AI Assistant Tab -->
+    <div id="ai-assistant" class="tab-content">
+      <div id="aiMessages" class="messages-container"></div>
+      <div class="input-group">
+        <select id="aiModel" style="width: 140px; padding: 8px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #fff; font-size: 13px;">
+          <option>llama3</option>
+        </select>
+        <input id="aiInput" type="text" placeholder="Ask AI something..." />
+        <button id="aiSendBtn">Send</button>
+      </div>
+    </div>
+
+    <!-- File Info Tab -->
+    <div id="file-info" class="tab-content">
+      <div id="fileInfoContent" style="padding: 15px; color: #cbd5e1; font-size: 13px; overflow-y: auto; max-height: 100%;">
+        <p style="color: #888;">Select a file to view its information</p>
+      </div>
+    </div>
+
+    <!-- Join Workspace Tab -->
+    <div id="join-workspace" class="tab-content">
+      <div style="padding: 15px; color: #cbd5e1; font-size: 13px;">
+        <p style="margin-bottom: 15px;">Enter a workspace code to join another team's workspace:</p>
+        <input id="joinWorkspaceCodeInput" type="text" placeholder="Enter workspace code" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; margin-bottom: 10px; text-transform: uppercase;" />
+        <button id="joinWorkspaceBtn" style="width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">JOIN WORKSPACE</button>
+        <div id="joinWorkspaceMessage" style="margin-top: 15px; padding: 10px; border-radius: 6px; display: none; text-align: center; font-size: 12px;"></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- Modal for Create File/Folder/Project -->
+<div id="modal" class="modal hidden">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <input id="itemName" placeholder="Enter name" />
+    <input id="projectDeadline" type="date" placeholder="Enter deadline" style="display: none; width: 100%; margin-top: 10px; padding: 8px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff;" />
+    <div class="actions">
+      <button id="cancel">Cancel</button>
+      <button id="create">Create</button>
+    </div>
+    <div id="modalMessage" style="color: red; margin-top: 10px; text-align: center; display: none;"></div>
+  </div>
+</div>
+
+<!-- Invite Team Modal -->
+<div id="inviteModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>Invite Team Members</h3>
+    
+    <!-- For Team Lead: Show invitation key -->
+    <div id="teamLeadSection" style="display: none;">
+      <p style="font-size: 12px; color: #888; margin-bottom: 10px;">Your unique invitation key (share with team members):</p>
+      <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+        <input id="inviteKey" type="text" readonly style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #10b981; font-weight: bold; font-size: 16px; letter-spacing: 2px;" />
+        <button id="copyKeyBtn" style="padding: 10px 15px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer;">Copy Key</button>
+      </div>
+      <button id="regenerateKeyBtn" style="width: 100%; padding: 10px; background: #6366f1; color: white; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 10px;">Generate New Key</button>
+    </div>
+    
+    <!-- For Team Members: Enter invitation key -->
+    <div id="teamMemberSection" style="display: none;">
+      <p style="font-size: 12px; color: #888; margin-bottom: 10px;">Enter the invitation key from your team lead:</p>
+      <input id="joinKeyInput" type="text" placeholder="Enter 8-character key" style="margin-bottom: 10px; width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff;" />
+      <button id="joinTeamBtn" style="width: 100%; padding: 10px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 10px;">Join Team</button>
+    </div>
+    
+    <div class="actions">
+      <button id="closeInviteBtn">Close</button>
+    </div>
+    <div id="inviteMessage" style="color: green; margin-top: 10px; text-align: center; display: none; font-size: 12px;"></div>
+  </div>
+</div>
+
+<!-- Modal for scheduling Google Meet -->
+<div id="meetingModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>Schedule Google Meet</h3>
+    <label for="meetingLink" style="font-size:12px; color:#888;">Meeting link (optional):</label>
+    <input id="meetingLink" type="text" placeholder="https://meet.google.com/xxx-xxx-xxx" style="width:100%; margin-top:8px; padding:8px; border-radius:6px; border:1px solid #334155; background:#0f172a; color:#fff;" />
+    <label for="meetingDateTime" style="font-size:12px; color:#888; margin-top:8px; display:block;">Date &amp; Time:</label>
+    <input id="meetingDateTime" type="datetime-local" style="width:100%; margin-top:8px; padding:8px; border-radius:6px; border:1px solid #334155; background:#0f172a; color:#fff;" />
+    <div class="actions">
+      <button id="cancelMeetingBtn">Cancel</button>
+      <button id="createMeetingBtn">Schedule</button>
+    </div>
+    <div id="meetingMessage" style="color:red; margin-top:10px; display:none; text-align:center; font-size:12px;"></div>
+  </div>
+</div>
+
+
+<!-- Floating round button moved into right panel tabs -->
+<!-- (button markup relocated above) -->
+
+<script src="workspace.js?v=2"></script>
+</body>
+</html>
+
+
+
+
